@@ -6,9 +6,14 @@ train = find(imdb.images.set == 1 & imdb.images.segmentation) ;
 classCounts = zeros(21,1) ;
 for i = 1:numel(train)
   fprintf('%s: computing segmentation stats for training image %d\n', mfilename, i) ;
+  try 
   lb = imread(sprintf(imdb.paths.classSegmentation, imdb.images.name{train(i)})) ;
   ok = lb < 255 ;
   classCounts = classCounts + accumarray(lb(ok(:))+1, 1, [21 1]) ;
+  catch e
+      fprintf('%s: OOPS! problem with image: %s\n',...
+          mfilename, sprintf(imdb.paths.classSegmentation, imdb.images.name{train(i)}));
+  end
 end
 stats.classCounts = classCounts ;
 

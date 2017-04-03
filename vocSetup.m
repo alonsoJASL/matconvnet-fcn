@@ -174,7 +174,7 @@ k = 0 ;
 fprintf('%s: getting detections for %d images\n', mfilename, numel(imdb.images.id)) ;
 for j=1:numel(imdb.images.id)
   fprintf('.') ; if mod(j,80)==0,fprintf('\n') ; end
-  name = imdb.images.name{j} ;   
+  name = imdb.images.name{j} ;
   annoPath = fullfile(opts.dataDir, 'Annotations', [name '.xml']) ;
   if ~exist(annoPath, 'file')
     if imdb.images.classification(j) && imdb.images.set(j) ~= 3
@@ -182,19 +182,19 @@ for j=1:numel(imdb.images.id)
     end
     continue ;
   end
-  
+
   doc = xmlread(annoPath) ;
   x = parseXML(doc, doc.getDocumentElement()) ;
-  
+
   %   figure(1) ; clf ;
   %   imagesc(imread(sprintf(imdb.paths.image,imdb.images.name{j}))) ;
-  
+
   for q = 1:numel(x.object)
     xmin = sscanf(x.object(q).bndbox.xmin,'%d') ;
     ymin = sscanf(x.object(q).bndbox.ymin,'%d') ;
     xmax = sscanf(x.object(q).bndbox.xmax,'%d') - 1 ;
     ymax = sscanf(x.object(q).bndbox.ymax,'%d') - 1 ;
-    
+
     k = k + 1 ;
     roi.id = k ;
     roi.image = imdb.images.id(j) ;
@@ -216,7 +216,7 @@ for j=1:numel(imdb.images.id)
       otherwise, error(sprintf('Unknown view ''%s''', x.object(q).pose)) ;
     end
     rois{k} = roi ;
-    
+
     %     hold on ;
     %     label=sprintf('%s %s d:%d t:%d o:%d',...
     %       imdb.classes.name{roi.class}, ...
@@ -274,5 +274,3 @@ end
 function str=esc(str)
 % -------------------------------------------------------------------------
 str = strrep(str, '\', '\\') ;
-
-

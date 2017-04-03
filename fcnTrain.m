@@ -92,8 +92,11 @@ bopts.labelStride = 1 ;
 bopts.labelOffset = 1 ;
 bopts.classWeights = ones(1,21,'single') ;
 bopts.rgbMean = stats.rgbMean ;
-bopts.useGpu = numel(opts.train.gpus) > 0 ;
-
+try 
+    bopts.useGpu = numel(opts.train.gpus) > 0 ;
+catch e
+    fprintf('%s: OOPS!\n', mfilename);
+end
 % Launch SGD
 info = cnn_train_dag(net, imdb, getBatchWrapper(bopts), ...
                      trainOpts, ....

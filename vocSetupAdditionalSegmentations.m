@@ -36,7 +36,7 @@ function imdb = vocSetupAdditionalSegmentations(imdb, varargin)
 opts.dataDir = 'data/voc12' ;
 opts.archiveDir = 'data/archives' ;
 opts.mergeMode = 2 ;
-opts.url = 'http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/semantic_contours/benchmark.tgz' ;
+opts.url = 'http://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/semantic_contours/benchmark.tgz' ;
 opts = vl_argparse(opts, varargin) ;
 
 tempDir = fullfile(opts.dataDir, 'berkeley') ;
@@ -131,6 +131,7 @@ for i = 1:numel(imdb.images.id)
 
   imdb.images.segmentation(i) = true ;
   imdb.images.set(i) = isT + 2 * isV + 3 * isX ;
+  fprintf('%s: IMDB.IMAGES.SET(%d) update. \n', mfilename, i);
 end
 
 
